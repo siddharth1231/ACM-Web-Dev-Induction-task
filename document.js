@@ -184,10 +184,6 @@ function markInterviewComplete(index) {
     }
 }
 
-function sendReminderEmail(email, interviewDate) {
-    console.log(`Sending reminder email to ${email} for the interview on ${interviewDate}`);
-    // You can integrate an email API here (like SendGrid or Mailgun) to actually send the email.
-}
 
 function collectFeedback(index) {
     if (applicants[index].status === 'Interview Complete, Pending Feedback') {
