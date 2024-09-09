@@ -36,12 +36,10 @@ section {
     padding: 20px;
 }
 
-/* Hide sections except the active one */
 .hidden {
     display: none;
 }
 
-/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
