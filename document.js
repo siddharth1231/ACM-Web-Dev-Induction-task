@@ -4,23 +4,19 @@ let applicants = [];
 
 function addApplicant(e) {
     e.preventDefault();
-
     let name = document.getElementById('name').value.trim();
     let email = document.getElementById('email').value.trim();
     let position = document.getElementById('position').value.trim();
 
-    // Check for empty fields
     if (!name || !email || !position) {
         alert('Please fill in all fields.');
         return;
     }
 
-    // Check if the email already exists
     let emailExists = applicants.some(applicant => applicant.email === email);
 
     if (emailExists) {
         alert('An applicant with this email already exists.');
-        // Reset the form in case of duplicate email to clear the input fields
         document.getElementById('applicant-form').reset();
         return;
     }
@@ -34,13 +30,10 @@ function addApplicant(e) {
 
     applicants.push(applicant);
     updateApplicantTable();
-
-    // Reset the form after successful submission
     document.getElementById('applicant-form').reset();
 }
 
 
-// Function to update applicant data
 function updateApplicantTable() {
     let tableBody = document.querySelector('#applicant-table tbody');
     tableBody.innerHTML = '';
@@ -66,18 +59,14 @@ function updateApplicantTable() {
         }
     });
 
-    updateDashboard();  // Update the dashboard when applicants are updated
+    updateDashboard();  
 }
 
-// Update dashboard counts
-function updateDashboard() {
-    // Create a Set of unique emails
-    let uniqueEmails = new Set(applicants.map(applicant => applicant.email));
 
-    // Total unique applicants
+function updateDashboard() {
+    let uniqueEmails = new Set(applicants.map(applicant => applicant.email));
     document.getElementById('total-applicants').innerText = uniqueEmails.size;
 
-    // Interviews Scheduled (unique emails)
     let interviewsScheduledEmails = new Set(
         applicants
             .filter(applicant => applicant.status.includes('Interview scheduled'))
@@ -85,7 +74,6 @@ function updateDashboard() {
     );
     document.getElementById('interviews-scheduled').innerText = interviewsScheduledEmails.size;
 
-    // Pending Feedback (unique emails)
     let pendingFeedbackEmails = new Set(
         applicants
             .filter(applicant => applicant.status === 'Interview Complete, Pending Feedback')
@@ -93,7 +81,6 @@ function updateDashboard() {
     );
     document.getElementById('feedback-pending').innerText = pendingFeedbackEmails.size;
 
-    // Interviews Completed (those with feedback received or pending feedback)
     let interviewsCompletedEmails = new Set(
         applicants
             .filter(applicant => applicant.status.includes('Feedback received'))
@@ -101,7 +88,6 @@ function updateDashboard() {
     );
     document.getElementById('completed').innerText = interviewsCompletedEmails.size;
 
-    // Interviews Pending (those with "Interview scheduled" but not completed)
     let interviewsPendingEmails = new Set(
         applicants
             .filter(applicant =>applicant.status.includes('Pending Interview'))
@@ -110,10 +96,7 @@ function updateDashboard() {
 
     document.getElementById('interviews-pending').innerText = interviewsPendingEmails.size;
 
-    // Update the scheduled interviews section
     updateScheduleTable();
-
-    // Update the feedback reports section
     updateReportsTable();
 }
 
@@ -147,15 +130,15 @@ function updateReportsTable() {
     });
 }
 
-let selectedApplicantIndex = null;  // Store the index of the applicant being scheduled
+let selectedApplicantIndex = null;  
 
 function openScheduleModal(index) {
-    selectedApplicantIndex = index;  // Set the selected applicant's index
-    document.getElementById('scheduleModal').style.display = 'block';  // Open the modal
+    selectedApplicantIndex = index;
+    document.getElementById('scheduleModal').style.display = 'block';
 }
 
 function closeScheduleModal() {
-    document.getElementById('scheduleModal').style.display = 'none';  // Close the modal
+    document.getElementById('scheduleModal').style.display = 'none';
 }
 
 function confirmScheduleInterview() {
@@ -166,17 +149,13 @@ function confirmScheduleInterview() {
         return;
     }
 
-    // Convert date to a readable format
     let formattedDate = new Date(interviewDate).toDateString();
 
-    // Update the status for the selected applicant
     updateApplicantStatus(selectedApplicantIndex, `Interview scheduled for ${formattedDate}`);
-
-    closeScheduleModal();  // Close the modal after scheduling
+    closeScheduleModal();  
 }
 
 function markInterviewComplete(index) {
-    // Ensure interview is scheduled before marking it as completed
     if (applicants[index].status.includes('Interview scheduled')) {
         updateApplicantStatus(index, 'Interview Complete, Pending Feedback');
     } else {
@@ -184,11 +163,9 @@ function markInterviewComplete(index) {
     }
 }
 
-
 function collectFeedback(index) {
     if (applicants[index].status === 'Interview Complete, Pending Feedback') {
         let feedback = prompt(`Enter feedback for ${applicants[index].name}:`);
-
         if (feedback) {
             updateApplicantStatus(index, `Feedback received: ${feedback}`);
         } else {
@@ -202,15 +179,12 @@ function collectFeedback(index) {
 
 function updateApplicantStatus(index, status) {
     applicants[index].status = status;
-    updateApplicantTable();  // Refresh the table after status change
+    updateApplicantTable();
 }
 
 function showSection(sectionId) {
-    // Hide all sections
     document.querySelectorAll('section').forEach(section => {
         section.classList.add('hidden');
     });
-
-    // Show the requested section
     document.getElementById(sectionId).classList.remove('hidden');
 }
