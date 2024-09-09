@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Induction Manager</title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+
+<body>
+    <header>
+        <h1>Club Induction Manager</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="showSection('applicants')">Applicants</a></li>
+                <li><a href="#" onclick="showSection('schedule')">Schedule Interviews</a></li>
+                <li><a href="#" onclick="showSection('reports')">Reports</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard">
+        <h2>Dashboard</h2>
+        <div class="status">
+            <p>Total Applicants: <span id="total-applicants">0</span></p>
+            <p>Completed: <span id="completed">0</span></p>
+            <p>Interview completed. Feedback pending: <span id="feedback-pending">0</span></p>
+            <p>Interviews Scheduled: <span id="interviews-scheduled">0</span></p>
+            <p>Interviews Pending: <span id="interviews-pending">0</span></p>
+        </div>
+    </section>
+
+    <!-- Applicants Section -->
+    <section id="applicants" class="hidden">
+        <h2>Applicant Data</h2>
+        <form id="applicant-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="position">Position Applied For:</label>
+            <input type="text" id="position" name="position" required>
+            <button type="submit">Add Applicant</button>
+        </form>
+        <table id="applicant-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript will populate the applicant data here -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Schedule Interviews Section -->
+    <section id="schedule" class="hidden">
+        <h2>Schedule Interviews</h2>
+        <p>Below are the applicants who have pending interviews:</p>
+        <table id="schedule-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript will populate the scheduled interviews here -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Reports Section -->
+    <section id="reports" class="hidden">
+        <h2>Reports - Feedback from Completed Interviews</h2>
+        <table id="reports-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Position</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript will populate the reports here -->
+            </tbody>
+        </table>
+    </section>
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeScheduleModal()">&times;</span>
+            <h2>Schedule Interview</h2>
+            <label for="interview-date">Select Interview Date:</label>
+            <input type="date" id="interview-date">
+            <button onclick="confirmScheduleInterview()">Schedule</button>
+            <button onclick="closeScheduleModal()">Cancel</button>
+        </div>
+    </div>
+    <script src="document.js"></script>
+</body>
+
+</html>
